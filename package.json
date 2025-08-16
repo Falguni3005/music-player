@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "axios": "^1.11.0",
     "fast-average-color": "^9.5.0",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.539.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

@@ -9,6 +9,8 @@ import SeekBar from "./components/SeekBar";
 import Controls from "./components/Controls";
 import { ChevronDown } from "lucide-react"; 
 import { Play, Pause } from "lucide-react";
+import animationData from "./animation.json"; 
+import Lottie from "lottie-react";
 
 
 export default function App() {
@@ -18,18 +20,59 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [showList, setShowList] = useState(true);   
   const [isExpanded, setIsExpanded] = useState(false); 
+  const [loading, setLoading] = useState(true);
 
   const bg = useGradient(currentSong?.cover, currentSong?.accent);
 
-  // Fetch songs once
   useEffect(() => {
-    fetchSongs().then(data => {
-      setSongs(data);
-      setQueue(data); // full queue for navigation
-    });
-  }, [setQueue]);
+    async function loadSongs() {
+      setLoading(true);
 
-  // Filter songs based on tab and search
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+
+      const data = await fetchSongs();
+      setSongs(data);
+      setQueue(data);
+      
+      await Promise.all(
+        data.map(song => {
+          return new Promise(resolve => {
+            const img = new Image();
+            img.src = song.cover;
+            img.onload = img.onerror = resolve;
+          });
+        })
+      );
+  
+      setLoading(false);
+    }
+  
+    loadSongs();
+  }, [setQueue]);
+  
+
+  if (loading) {
+    return (
+      <div className="flex flex-col min-h-screen bg-black p-6">
+        <div className="flex items-center justify-between p-4 backdrop-blur-md">
+          <div className="flex items-center gap-2">
+            <img src="/spotify.png" alt="Spotify" className="w-8 h-8 rounded-full" />
+            <h1 className="text-lg font-bold">Spotify</h1>
+          </div>
+          <img
+            src="/spotifyProfile.jpeg"
+            alt="Profile"
+            className="w-8 h-8 rounded-full"
+          />
+        </div>
+        <div className="w-full flex justify-center items-center min-h-[600px]">
+        <Lottie animationData={animationData} loop className="w-64 h-64" />
+        </div>
+      </div>
+    );
+  }
+
+
   const filteredSongs = songs.filter(song => {
     const matchesQuery =
       song.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -39,9 +82,8 @@ export default function App() {
     return matchesQuery && matchesTab;
   });
 
-  // Handle track click
   const handlePlaySong = (song) => {
-    setCurrentSong(song); // directly set the song object
+    setCurrentSong(song);
   };
   
 
@@ -55,7 +97,7 @@ export default function App() {
         transition: "background 0.5s",
       }}
     >
-      {/* Desktop Sidebar */}
+
       <aside className="hidden lg:flex lg:w-1/2">
         <div className="w-1/3 flex flex-col justify-between p-6">
           <div className="flex items-center gap-2">
@@ -78,7 +120,6 @@ export default function App() {
         </div>
       </aside>
 
-      {/* Desktop Player */}
       <main className="hidden lg:flex flex-1 flex-col items-center p-8 mt-8">
         {currentSong && (
           <>
