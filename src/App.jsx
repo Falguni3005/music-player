@@ -8,9 +8,11 @@ import TrackList from "./components/TrackList";
 import SeekBar from "./components/SeekBar";
 import Controls from "./components/Controls";
 import { ChevronDown } from "lucide-react"; 
+import { Play, Pause } from "lucide-react";
+
 
 export default function App() {
-  const { setQueue, currentSong, setCurrentSong } = usePlayer();
+  const { setQueue, currentSong, setCurrentSong, isPlaying, play, pause } = usePlayer();
   const [songs, setSongs] = useState([]);
   const [tab, setTab] = useState("forYou");
   const [query, setQuery] = useState("");
@@ -103,6 +105,19 @@ export default function App() {
 
       {/* Mobile */}
       <div className="lg:hidden flex-1 relative">
+
+        <div className="flex items-center justify-between p-4 backdrop-blur-md">
+          <div className="flex items-center gap-2">
+            <img src="/spotify.png" alt="Spotify" className="w-8 h-8 rounded-full" />
+            <h1 className="text-lg font-bold">Spotify</h1>
+          </div>
+          <img
+            src="/spotifyProfile.jpeg"
+            alt="Profile"
+            className="w-8 h-8 rounded-full"
+          />
+        </div>
+
         {showList && (
           <div className="p-6 flex flex-col h-full">
             <Tabs activeTab={tab} setActiveTab={setTab} />
@@ -154,26 +169,37 @@ export default function App() {
               </div>
             ) : (
               <div
-                className="flex items-center justify-between h-full cursor-pointer"
-                onClick={() => setIsExpanded(true)}
-              >
-                <div className="flex items-center gap-3">
-                  <img
-                    src={currentSong.cover}
-                    className="w-12 h-12 rounded"
-                    alt={currentSong.name}
-                  />
-                  <div>
-                    <p className="font-semibold text-sm leading-tight">
-                      {currentSong.name}
-                    </p>
-                    <p className="text-xs opacity-70">{currentSong.artist}</p>
-                  </div>
+              className="flex items-center justify-between h-full cursor-pointer"
+              onClick={() => setIsExpanded(true)}
+            >
+              <div className="flex items-center gap-3">
+                <img
+                  src={currentSong.cover}
+                  className="w-12 h-12 rounded"
+                  alt={currentSong.name}
+                />
+                <div>
+                  <p className="font-semibold text-md leading-tight">
+                    {currentSong.name}
+                  </p>
+                  <p className="text-sm opacity-70">{currentSong.artist}</p>
                 </div>
-                <button className="bg-white text-black rounded-full p-2">
-                  ▶
-                </button>
               </div>
+            
+              <button
+                className="bg-white text-black rounded-full p-3 flex items-center justify-center hover:bg-white/80 transition"
+                onClick={(e) => {
+                  e.stopPropagation(); 
+                  if (isPlaying) {
+                    pause();
+                  } else {
+                    play();
+                  }
+                }}
+              >
+                {isPlaying ? <Pause size={20} className="fill-current"/> : <Play size={20} className="fill-current"/>}
+              </button>
+            </div>            
             )}
           </div>
         )}
