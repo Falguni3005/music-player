@@ -5,13 +5,13 @@ export default function Controls() {
     const { isPlaying, play, pause, next, prev, volume, setVolume } = usePlayer();
   return (
     <div className="flex items-center justify-between mt-4 w-full">
-        <button  className="text-gray-400 flex items-center justify-center transition-colors rounded-full h-11 w-11 bg-white/10">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <button  className="text-white-400 flex items-center justify-center transition-colors rounded-full h-11 w-11 bg-white/10">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm8 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm8 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
             </svg>
         </button>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-6">
 
             <button onClick={prev} className="hover:scale-110 transition">
                 <FastForward
