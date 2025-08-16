@@ -90,7 +90,7 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen flex flex-col md:flex-row text-white relative"
+      className="min-h-screen flex flex-col md:flex-row text-white relative z-0"
       style={{
         background: colorLoading ? "#000" : bg,
         backgroundSize: "cover",
@@ -98,14 +98,13 @@ export default function App() {
         transition: "background 0.5s",
       }}
     >
+    {colorLoading && (
+      <div className="absolute inset-0 flex justify-center items-center z-10 bg-black/60">
+        <Lottie animationData={circles} loop className="w-60 h-60" />
+      </div>
+    )}
 
-      {colorLoading && (
-        <div className="absolute inset-0 flex justify-center items-center bg-black">
-          <Lottie animationData={circles} loop className="w-60 h-60" />
-        </div>
-      )}
-
-     {!colorLoading && <aside className="hidden lg:flex lg:w-1/2">
+    <aside className="hidden lg:flex lg:w-1/2 relative z-20">
         <div className="w-1/3 flex flex-col justify-between p-6">
           <div className="flex items-center gap-2">
             <img src="/spotify.png" alt="Spotify" className="w-9 h-9 rounded-full" />
@@ -125,9 +124,9 @@ export default function App() {
             <TrackList songs={filteredSongs} onTrackClick={handlePlaySong} />
           </div>
         </div>
-      </aside>}
+      </aside>
 
-     {!colorLoading && <main className="hidden lg:flex flex-1 flex-col items-center p-8 mt-8">
+     <main className="hidden lg:flex flex-1 flex-col items-center p-8 mt-8 relative z-20">
         {currentSong && (
           <>
             <div className="w-[420px] text-left mb-4">
@@ -149,10 +148,9 @@ export default function App() {
             </div>
           </>
         )}
-      </main>}
+      </main>
 
-      {/* Mobile */}
-      { !colorLoading &&<div className="lg:hidden flex-1 relative">
+     <div className="lg:hidden flex-1 relative z-20">
 
         <div className="flex items-center justify-between p-4 backdrop-blur-md">
           <div className="flex items-center gap-2">
@@ -251,7 +249,7 @@ export default function App() {
             )}
           </div>
         )}
-      </div>}
+      </div>
     </div>
   );
 }
