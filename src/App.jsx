@@ -101,11 +101,11 @@ export default function App() {
 
       {colorLoading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black">
-          <Lottie animationData={circles} loop className="w-100 h-100" />
+          <Lottie animationData={circles} loop className="w-60 h-60" />
         </div>
       )}
 
-      <aside className="hidden lg:flex lg:w-1/2">
+     {!colorLoading && <aside className="hidden lg:flex lg:w-1/2">
         <div className="w-1/3 flex flex-col justify-between p-6">
           <div className="flex items-center gap-2">
             <img src="/spotify.png" alt="Spotify" className="w-9 h-9 rounded-full" />
@@ -125,9 +125,9 @@ export default function App() {
             <TrackList songs={filteredSongs} onTrackClick={handlePlaySong} />
           </div>
         </div>
-      </aside>
+      </aside>}
 
-      <main className="hidden lg:flex flex-1 flex-col items-center p-8 mt-8">
+     {!colorLoading && <main className="hidden lg:flex flex-1 flex-col items-center p-8 mt-8">
         {currentSong && (
           <>
             <div className="w-[420px] text-left mb-4">
@@ -149,10 +149,10 @@ export default function App() {
             </div>
           </>
         )}
-      </main>
+      </main>}
 
       {/* Mobile */}
-      <div className="lg:hidden flex-1 relative">
+      { !colorLoading &&<div className="lg:hidden flex-1 relative">
 
         <div className="flex items-center justify-between p-4 backdrop-blur-md">
           <div className="flex items-center gap-2">
@@ -251,7 +251,7 @@ export default function App() {
             )}
           </div>
         )}
-      </div>
+      </div>}
     </div>
   );
 }
