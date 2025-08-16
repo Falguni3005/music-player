@@ -99,7 +99,7 @@ export default function App() {
       }}
     >
     {colorLoading && (
-      <div className="absolute inset-0 flex justify-center items-center z-10 bg-black/60">
+      <div className="absolute inset-0 flex justify-center items-center z-10 bg-black/60 md:z-50">
         <Lottie animationData={circles} loop className="w-60 h-60" />
       </div>
     )}
