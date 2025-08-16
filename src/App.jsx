@@ -179,7 +179,7 @@ export default function App() {
             className={`fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md transition-all duration-300 ${
               isExpanded ? "h-full p-6" : "h-20 px-4"
             }`}
-            style={{ background: colorLoading ? "#000" : bg,}}
+            style={{ background: bg}}
           >
             {isExpanded ? (
               <div className="flex flex-col items-center justify-center h-full relative p-3">
