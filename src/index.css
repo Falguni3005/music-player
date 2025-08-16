@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide slider thumb (Chrome, Safari, Edge) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+
+/* Hide slider thumb (Firefox) */
+input[type="range"]::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}
+
+/* Hide slider thumb (IE/Edge) */
+input[type="range"]::-ms-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}
