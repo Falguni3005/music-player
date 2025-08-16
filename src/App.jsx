@@ -11,6 +11,7 @@ import { ChevronDown } from "lucide-react";
 import { Play, Pause } from "lucide-react";
 import animationData from "./animation.json"; 
 import Lottie from "lottie-react";
+import circles from "./circles.json"
 
 
 export default function App() {
@@ -22,7 +23,7 @@ export default function App() {
   const [isExpanded, setIsExpanded] = useState(false); 
   const [loading, setLoading] = useState(true);
 
-  const bg = useGradient(currentSong?.cover, currentSong?.accent);
+  const { bg, colorLoading } = useGradient(currentSong?.cover, "#000");
 
   useEffect(() => {
     async function loadSongs() {
@@ -91,12 +92,18 @@ export default function App() {
     <div
       className="min-h-screen flex flex-col md:flex-row text-white relative"
       style={{
-        background: bg,
+        background: colorLoading ? "#000" : bg,
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
         transition: "background 0.5s",
       }}
     >
+
+      {colorLoading && (
+        <div className="absolute inset-0 flex justify-center items-center bg-black">
+          <Lottie animationData={circles} loop className="w-100 h-100" />
+        </div>
+      )}
 
       <aside className="hidden lg:flex lg:w-1/2">
         <div className="w-1/3 flex flex-col justify-between p-6">
@@ -174,7 +181,7 @@ export default function App() {
             className={`fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md transition-all duration-300 ${
               isExpanded ? "h-full p-6" : "h-20 px-4"
             }`}
-            style={{background:bg}}
+            style={{ background: colorLoading ? "#000" : bg,}}
           >
             {isExpanded ? (
               <div className="flex flex-col items-center justify-center h-full relative p-3">
